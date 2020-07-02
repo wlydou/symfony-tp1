@@ -26,26 +26,41 @@
         <li>Your template at <code><a href="{{ 'C:/wamp64/www/tp_calculator/templates/addition/index.html.twig'|file_link(0) }}">templates/addition/index.html.twig</a></code></li>
     </ul>
 
-    {% set valeurs = rows %}
+    <p>xmin: {{ inputs[0] }} / xmax: {{ inputs[1] }}</p>
+    <p>ymin: {{ inputs[2] }} / ymax: {{ inputs[3] }}</p>
+
+    {% if inputs is defined %}
+
+    {% set valeurs = [] %}
+    <!-- Liste des valeurs de y -->
+    {% for i in inputs[2]..inputs[3] %}
+        {% set valeurs = valeurs|merge([i]) %}
+    {% endfor %}
+
     <table border="1">
+        <!-- Première ligne : Les valeurs de x -->
         <tr>
             <td></td>
-            <!-- Première ligne -->
             {% for i in inputs[0]..inputs[1] %}
                 <td>{{ i }}</td>
             {% endfor %}
         </tr>
-        {% for j in inputs[0]..inputs[1] %}
+        <!-- Lignes ymin à ymax -->
+        {% for j in inputs[2]..inputs[3] %}
             <tr>
+                <!-- Première valeur de la ligne : Valeur de y -->
                 <td>{{ valeurs|first }}</td>
                 {% set valeurs = valeurs|slice(1,valeurs|length) %}
                 
-                {% for k in inputs[2]..inputs[3] %}
+                <!-- Somme de x et y pour chaque colonne -->
+                {% for k in inputs[0]..inputs[1] %}
                     <td>{{ j + k }}</td>
                 {% endfor %}
             </tr>
         {% endfor %}
+        
     </table>
     <!--{% for value in result %} {{ value }} {% endfor %}-->
+    {% endif %}
 </div>
 {% endblock %}
