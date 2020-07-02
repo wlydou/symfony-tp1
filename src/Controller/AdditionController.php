@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdditionController extends AbstractController
 {
@@ -32,26 +33,73 @@ class AdditionController extends AbstractController
             throw new \Exception('Les valeurs ne sont pas des entiers positifs');
         }
 
-        $result = [];
-        $valuesY = [];
+        return $this->render('addition/index.html.twig', [
+            'controller_name' => 'AdditionController',
+            'inputs' => [$xmin, $xmax, $ymin, $ymax]
+        ]);
+    }
 
-        //Algorithme de calcul
-        for($i = $xmin; $i <= $xmax; $i++) { //Parcours des x
-            for($j = $ymin; $j <= $ymax; $j++) {//Parcours des y
-                $somme = $i + $j;
-                array_push($result, $somme);
-            }
-        }
+    /**
+     * @Route("/addLine", name="addLine")
+     */
+    public function addLine(Request $request)
+    {   
+        $inputs =  $request->query->get('inputs');
 
-        for($k = $ymin; $k <= $ymax; $k++) {
-            array_push($valuesY, $k);
-        }
+        //Ajout d'une ligne (ymax + 1)
+        $inputs[3] += 1;
 
         return $this->render('addition/index.html.twig', [
             'controller_name' => 'AdditionController',
-            'inputs' => [$xmin, $xmax, $ymin, $ymax],
-            'result' => $result,
-            'rows' => $valuesY
+            'inputs' => $inputs
+        ]);
+    }
+
+    /**
+     * @Route("/addColumn", name="addColumn")
+     */
+    public function addColumn(Request $request)
+    {   
+        $inputs =  $request->query->get('inputs');
+
+        //Ajout d'une colonne (xmax + 1)
+        $inputs[1] += 1;
+
+        return $this->render('addition/index.html.twig', [
+            'controller_name' => 'AdditionController',
+            'inputs' => $inputs
+        ]);
+    }
+
+    /**
+     * @Route("/removeLine", name="removeLine")
+     */
+    public function removeLine(Request $request)
+    {   
+        $inputs =  $request->query->get('inputs');
+
+        //Suppression d'une ligne (ymax - 1)
+        $inputs[3] -= 1;
+
+        return $this->render('addition/index.html.twig', [
+            'controller_name' => 'AdditionController',
+            'inputs' => $inputs
+        ]);
+    }
+
+    /**
+     * @Route("/removeColumn", name="removeColumn")
+     */
+    public function removeColumn(Request $request)
+    {   
+        $inputs =  $request->query->get('inputs');
+
+        //Suppression d'une colonne (xmax - 1)
+        $inputs[1] -= 1;
+
+        return $this->render('addition/index.html.twig', [
+            'controller_name' => 'AdditionController',
+            'inputs' => $inputs
         ]);
     }
 }
