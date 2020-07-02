@@ -12,11 +12,27 @@ class AdditionController extends AbstractController
     /**
      * @Route("/addition", name="addition")
      */
-    public function index()
+    public function index(SessionInterface $session)
     {
-        return $this->render('addition/index.html.twig', [
-            'controller_name' => 'AdditionController',
-        ]);
+        //Récupération des valeurs dans la session
+        $xmin = $session->get('xmin');
+        $xmax = $session->get('xmax');
+        $ymin = $session->get('ymin');
+        $ymax = $session->get('ymax');
+
+        //Si les valeurs session n'existent pas, on renvoie des valeurs par défaut (0-10)
+        if(empty($xmin) || empty($xmax) || empty($ymin) || empty($ymax)){
+            return $this->render('addition/index.html.twig', [
+                'controller_name' => 'AdditionController',
+                'inputs' => [0, 10, 0, 10]
+            ]);
+        } else {
+            //Valeurs session existantes
+            return $this->render('addition/index.html.twig', [
+                'controller_name' => 'AdditionController',
+                'inputs' => [$xmin, $xmax, $ymin, $ymax]
+            ]);
+        }
     }
 
      /**
@@ -61,8 +77,7 @@ class AdditionController extends AbstractController
 
         return $this->render('addition/index.html.twig', [
             'controller_name' => 'AdditionController',
-            'inputs' => $inputs,
-            'xmin' => $param1
+            'inputs' => $inputs
         ]);
     }
 
