@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+{% endblock %}
+
+{% block title %}Calculator{% endblock %}
+
+{% block body %}
+
+    <h1>Vos résultats de multiplication 🧮</h1>
+
+    {% if inputs is defined %}
+
+    <h5>
+        <p>xmin: {{ inputs[0] }} / xmax: {{ inputs[1] }}</p>
+        <p>ymin: {{ inputs[2] }} / ymax: {{ inputs[3] }}</p>
+    </h5>
+
+    {% set valeurs = [] %}
+    <!-- Liste des valeurs de y -->
+    {% for i in inputs[2]..inputs[3] %}
+        {% set valeurs = valeurs|merge([i]) %}
+    {% endfor %}
+
+    <table border="1" class="striped">
+        <!-- Première ligne : Les valeurs de x -->
+        <tr>
+            <td></td>
+            {% for i in inputs[0]..inputs[1] %}
+                <td>{{ i }}</td>
+            {% endfor %}
+        </tr>
+        <!-- Lignes ymin à ymax -->
+        {% for j in inputs[2]..inputs[3] %}
+            <tr>
+                <!-- Première valeur de la ligne : Valeur de y -->
+                <td>{{ valeurs|first }}</td>
+                {% set valeurs = valeurs|slice(1,valeurs|length) %}
+                
+                <!-- Somme de x et y pour chaque colonne -->
+                {% for k in inputs[0]..inputs[1] %}
+                    <td>{{ j * k }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        
+    </table>
+    <br/>
+    <div>
+    <a href="{{ path('addLineMultiply', { 'inputs' : inputs }) }}" class="waves-effect waves-light btn"><i class="material-icons right">view_list</i>Ajouter une ligne </a>
+    <a href="{{ path('addColumnMultiply', { 'inputs' : inputs }) }}" class="waves-effect waves-light btn"><i class="material-icons right">view_column</i>Ajouter une colonne </a>
+    <a href="{{ path('removeLineMultiply', { 'inputs' : inputs }) }}" class="waves-effect waves-light btn red accent-3"><i class="material-icons right">view_list</i>Supprimer une ligne </a>
+    <a href="{{ path('removeColumnMultiply', { 'inputs' : inputs }) }}" class="waves-effect waves-light btn red accent-3"><i class="material-icons right">view_column</i>Supprimer une colonne </a>
+    </div>
+    {% endif %}
+{% endblock %}
