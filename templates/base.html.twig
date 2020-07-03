@@ -6,7 +6,24 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        {% block navbar %}
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo"><i class="material-icons">cloud</i>Calculator</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="{{ path('addition', { 'inputs' : inputs }) }}">Addition</a></li>
+                    <li><a href="{{ path('multiplication', { 'inputs' : inputs }) }}">Multiplication</a></li>
+                </ul>
+            </div>
+        </nav>
+        {% endblock %}
+        <div class="container">
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+
+        <br/>
+        </div>
+        {{ include('footer.html.twig') }}
     </body>
+    <br/>
 </html>

@@ -14,7 +14,6 @@
 
 {% block body %}
 
-<div class="container">
     <h1>Vos résultats d'addition 🧮</h1>
 
     {% if inputs is defined %}
@@ -61,5 +60,4 @@
     <a href="{{ path('removeColumn', { 'inputs' : inputs }) }}" class="waves-effect waves-light btn red accent-3"><i class="material-icons right">view_column</i>Supprimer une colonne </a>
     </div>
     {% endif %}
-</div>
 {% endblock %}

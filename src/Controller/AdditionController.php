@@ -15,10 +15,10 @@ class AdditionController extends AbstractController
     public function index(SessionInterface $session)
     {
         //Récupération des valeurs dans la session
-        $xmin = $session->get('xmin');
-        $xmax = $session->get('xmax');
-        $ymin = $session->get('ymin');
-        $ymax = $session->get('ymax');
+        $xmin = $session->get('xmin-addition');
+        $xmax = $session->get('xmax-addition');
+        $ymin = $session->get('ymin-addition');
+        $ymax = $session->get('ymax-addition');
 
         //Si les valeurs session n'existent pas, on renvoie des valeurs par défaut (0-10)
         if(empty($xmin) || empty($xmax) || empty($ymin) || empty($ymax)){
@@ -51,10 +51,10 @@ class AdditionController extends AbstractController
         }
 
         //Enregistrement des valeurs dans la session
-        $session->set('xmin', $xmin);
-        $session->set('xmax', $xmax);
-        $session->set('ymin', $ymin);
-        $session->set('ymax', $ymax);
+        $session->set('xmin-addition', $xmin);
+        $session->set('xmax-addition', $xmax);
+        $session->set('ymin-addition', $ymin);
+        $session->set('ymax-addition', $ymax);
 
         return $this->render('addition/index.html.twig', [
             'controller_name' => 'AdditionController',
@@ -73,7 +73,7 @@ class AdditionController extends AbstractController
         $inputs[3] += 1;
 
         //Mise à jour variable session ymax
-        $session->set('ymax', $inputs[3]);
+        $session->set('ymax-addition', $inputs[3]);
 
         return $this->render('addition/index.html.twig', [
             'controller_name' => 'AdditionController',
@@ -92,7 +92,7 @@ class AdditionController extends AbstractController
         $inputs[1] += 1;
 
         //Mise à jour variable session xmax
-        $session->set('xmax', $inputs[1]);
+        $session->set('xmax-addition', $inputs[1]);
 
         return $this->render('addition/index.html.twig', [
             'controller_name' => 'AdditionController',
@@ -111,7 +111,7 @@ class AdditionController extends AbstractController
         $inputs[3] -= 1;
 
         //Mise à jour variable session ymax
-        $session->set('ymax', $inputs[3]);
+        $session->set('ymax-addition', $inputs[3]);
 
         return $this->render('addition/index.html.twig', [
             'controller_name' => 'AdditionController',
@@ -130,7 +130,7 @@ class AdditionController extends AbstractController
         $inputs[1] -= 1;
 
         //Mise à jour variable session xmax
-        $session->set('xmax', $inputs[1]);
+        $session->set('xmax-addition', $inputs[1]);
 
         return $this->render('addition/index.html.twig', [
             'controller_name' => 'AdditionController',
