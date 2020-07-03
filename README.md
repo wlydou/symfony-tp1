@@ -12,7 +12,7 @@ Calculator
 
 ### ROUTES
 
-/addition
-/addition/{xmin}/{xmax}/{ymin}/{ymax}
-/multiplication
-/multiplication/{xmin}/{xmax}/{ymin}/{ymax}
+- /addition
+- /addition/{xmin}/{xmax}/{ymin}/{ymax}
+- /multiplication
+- /multiplication/{xmin}/{xmax}/{ymin}/{ymax}
